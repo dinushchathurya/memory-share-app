@@ -7,5 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dinush Chathurya",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "moment": "^2.29.1",
+    "react-file-base64": "^1.0.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  }
 }
