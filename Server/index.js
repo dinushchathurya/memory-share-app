@@ -1,28 +1,26 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors')
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cors from 'cors';
+
+import postRoutes from './routes/posts.js';
 
 const app = express();
+
+app.use('/posts', postRoutes);
 
 app.use(bodyParser.json({ limit:"30mb", extended:true}));
 app.use(bodyParser.urlencoded({ limit:"30mb", extended:true}));
 app.use(cors());
 
-/* DataBase Config */
-const db = require('./config/keys').mongoURI;
+app.use('/posts', postRoutes);
 
-/* Connect to MongoDB */
-mongoose
-    .connect(db, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+const CONNECTION_URL = 'mongodb+srv://<username>:<password>1@learning.eauwn.mongodb.net/<database>?retryWrites=true&w=majority';
+const PORT = process.env.PORT || 5000;
 
+mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+    .catch((error) => console.log(`${error} did not connect`));
 
-const port = process.env.PORT || 5000;
+mongoose.set('useFindAndModify', false);
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
